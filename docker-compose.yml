@@ -1,0 +1,45 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: devpulse-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: devpulse
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d devpulse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: devpulse-web
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:postgres@db:5432/devpulse?schema=public
+      - NEXTAUTH_SECRET=a_very_long_secret_that_exceeds_thirty_two_characters_minimum
+      - NEXTAUTH_URL=http://localhost:3000
+      - AUTH_TRUST_HOST=true
+      - GITHUB_CLIENT_ID=mock_github_client_id
+      - GITHUB_CLIENT_SECRET=mock_github_client_secret
+      - UPSTASH_REDIS_REST_URL=
+      - UPSTASH_REDIS_REST_TOKEN=
+      - BLOB_READ_WRITE_TOKEN=mock_blob_read_write_token
+      - PUSHER_APP_ID=mock_pusher_app_id
+      - NEXT_PUBLIC_PUSHER_KEY=mock_pusher_key
+      - PUSHER_SECRET=mock_pusher_secret
+      - NEXT_PUBLIC_PUSHER_CLUSTER=mt1
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  postgres_data:
