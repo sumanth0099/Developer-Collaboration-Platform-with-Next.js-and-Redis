@@ -3,7 +3,7 @@ export const DEFAULT_TAGS = [
   { name: "React", color: "#61dafb" },
   { name: "TypeScript", color: "#3178c6" },
   { name: "Node.js", color: "#339933" },
-  { name: "Prisma", color: "#2d3748" },
+  { name: "Prisma", color: "#2d3748"  },
   { name: "TailwindCSS", color: "#06b6d4" },
   { name: "Performance", color: "#eab308" },
   { name: "Redis", color: "#dc382d" },
