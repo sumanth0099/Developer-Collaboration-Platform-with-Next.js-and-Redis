@@ -29,8 +29,9 @@ export function resolveAuthUrl(): void {
   const resolved = vercelDeploymentUrl();
   if (!resolved) return;
 
-  process.env.AUTH_URL = resolved;
-  process.env.NEXTAUTH_URL = resolved;
+  const env = process.env as Record<string, string | undefined>;
+  env["AUTH_URL"] = resolved;
+  env["NEXTAUTH_URL"] = resolved;
 }
 
 resolveAuthUrl();
