@@ -16,20 +16,31 @@ function vercelDeploymentUrl(): string | undefined {
   return host ? `https://${host}` : undefined;
 }
 
-/** Ensure Auth.js uses the real deployment URL, not template env values. */
+/**
+ * Ensure Auth.js uses the real deployment URL, not template env values.
+ *
+ * NOTE: This module must NEVER be imported in Edge Runtime (middleware.ts).
+ * Webpack inlines process.env.* as string literals in Edge bundles, which
+ * turns assignments like `process.env.AUTH_URL = x` into `"literal" = x`
+ * (an "Assigning to rvalue" build error).
+ *
+ * Instead, this runs only via instrumentation.ts (Node.js runtime) and
+ * lib/auth.ts (server-side Node.js).
+ */
 export function resolveAuthUrl(): void {
-  for (const key of ["AUTH_URL", "NEXTAUTH_URL"] as const) {
-    if (isPlaceholderAuthUrl(process.env[key])) {
-      delete process.env[key];
+  const env = process.env as Record<string, string | undefined>;
+
+  for (const key of ["AUTH_URL", "NEXTAUTH_URL"]) {
+    if (isPlaceholderAuthUrl(env[key])) {
+      delete env[key];
     }
   }
 
-  if (process.env.AUTH_URL || process.env.NEXTAUTH_URL) return;
+  if (env["AUTH_URL"] || env["NEXTAUTH_URL"]) return;
 
   const resolved = vercelDeploymentUrl();
   if (!resolved) return;
 
-  const env = process.env as Record<string, string | undefined>;
   env["AUTH_URL"] = resolved;
   env["NEXTAUTH_URL"] = resolved;
 }
