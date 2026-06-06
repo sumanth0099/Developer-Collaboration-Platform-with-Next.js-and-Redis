@@ -1,8 +1,9 @@
+import "@/lib/resolve-auth-url";
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import { prisma } from "./prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { NextRequest } from "next/server";
 import { User } from "@prisma/client";
 import { authConfig } from "@/auth.config";

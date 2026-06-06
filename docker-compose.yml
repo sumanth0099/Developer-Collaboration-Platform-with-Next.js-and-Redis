@@ -26,6 +26,7 @@ services:
     environment:
       - DATABASE_URL=postgresql://postgres:postgres@db:5432/devpulse?schema=public
       - NEXTAUTH_SECRET=a_very_long_secret_that_exceeds_thirty_two_characters_minimum
+      # Local Docker only — not used by Vercel production
       - NEXTAUTH_URL=http://localhost:3000
       - AUTH_TRUST_HOST=true
       - GITHUB_CLIENT_ID=mock_github_client_id
