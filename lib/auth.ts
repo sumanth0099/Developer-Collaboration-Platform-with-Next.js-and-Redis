@@ -3,7 +3,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import GitHubProvider from "next-auth/providers/github";
 import { prisma } from "./prisma";
-import bcrypt from "bcryptjs";
+import { verifyPassword } from "@/lib/password";
 import { NextRequest } from "next/server";
 import { User } from "@prisma/client";
 import { authConfig } from "@/auth.config";
@@ -151,7 +151,7 @@ export async function validateCredentials(
     where: { email },
   });
   if (!user || !user.password) return null;
-  const isValid = await bcrypt.compare(password, user.password);
+  const isValid = await verifyPassword(password, user.password);
   if (!isValid) return null;
   return user;
 }

@@ -14,13 +14,16 @@
   "prisma": {
     "seed": "tsx prisma/seed.ts"
   },
+  "overrides": {
+    "bcrypt": "npm:bcryptjs@2.4.3"
+  },
   "dependencies": {
     "@prisma/client": "^6.2.1",
     "@tanstack/react-query": "^5.101.0",
     "@upstash/ratelimit": "^2.0.8",
     "@upstash/redis": "^1.38.0",
     "@vercel/blob": "^2.4.0",
-    "bcryptjs": "^3.0.3",
+    "bcryptjs": "^2.4.3",
     "clsx": "^2.1.1",
     "lucide-react": "^1.17.0",
     "next": "14.2.35",

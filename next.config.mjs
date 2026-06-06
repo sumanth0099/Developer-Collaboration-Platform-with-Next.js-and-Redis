@@ -28,6 +28,17 @@ const nextConfig = {
   ...(resolvedAuthUrl
     ? { env: { AUTH_URL: resolvedAuthUrl, NEXTAUTH_URL: resolvedAuthUrl } }
     : {}),
+  experimental: {
+    serverComponentsExternalPackages: ["bcryptjs"],
+  },
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      // Never bundle native bcrypt if anything still references it.
+      bcrypt: "bcryptjs",
+    };
+    return config;
+  },
   images: {
     domains: ["avatars.githubusercontent.com", "public.blob.vercel-storage.com", "res.cloudinary.com", "lh3.googleusercontent.com"],
     formats: ["image/avif", "image/webp"],
