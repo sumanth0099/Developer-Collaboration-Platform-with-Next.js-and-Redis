@@ -1,36 +1,262 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# DevPulse — Real-Time Developer Collaboration Platform
 
-## Getting Started
+DevPulse is a full-stack real-time developer collaboration and code review platform built with Next.js 14, PostgreSQL, Prisma, Redis, and WebSockets.
 
-First, run the development server:
+The platform allows developers to submit code snippets for peer review, receive live feedback, vote on submissions, track reputation, and monitor contribution activity through a public leaderboard.
+
+This project focuses heavily on scalable backend architecture, server-side rendering, caching strategies, real-time communication, and production-ready Next.js patterns.
+
+---
+
+# Features
+
+## Authentication & Authorization
+
+* GitHub OAuth authentication using NextAuth.js v5
+* Credentials-based login system
+* Protected dashboard routes with middleware
+* Session-based user management
+
+## Developer Submission System
+
+* Create and manage code submissions
+* Multiple programming language support
+* Difficulty-based categorization
+* Tagging system for submissions
+* Real-time submission feed
+
+## Peer Review System
+
+* Submit detailed code reviews
+* Line-specific review references
+* Review resolution workflow
+* Duplicate review prevention
+* Self-review restriction handling
+
+## Voting & Reputation
+
+* Upvote and downvote submissions
+* Dynamic vote toggling system
+* Reputation score calculation
+* Public leaderboard rankings
+
+## Real-Time Features
+
+* Live review updates using Socket.io/Pusher
+* Instant notification delivery
+* Real-time unread notification count
+* Live review feed updates without refresh
+
+## Performance & Caching
+
+* Redis-based caching layer
+* Sliding-window API rate limiting
+* Optimized server-side rendering
+* Cached leaderboard queries
+* Incremental view count tracking
+
+## File Uploads
+
+* Upload code snapshot images
+* Image validation and size restrictions
+* Cloud storage integration
+* Snapshot management system
+
+## Dashboard & Analytics
+
+* Personalized user profiles
+* Contribution activity graph
+* Submission statistics
+* Review analytics
+* Reputation tracking
+
+## Testing
+
+* Unit testing with Vitest
+* Utility function testing
+* API logic validation
+* Mocked Prisma test environment
+
+---
+
+# Tech Stack
+
+## Frontend
+
+* Next.js 14 (App Router)
+* React
+* TypeScript
+* Tailwind CSS
+* TanStack Query v5
+
+## Backend
+
+* Next.js Route Handlers
+* Server Actions
+* Prisma ORM
+* PostgreSQL
+* Upstash Redis
+
+## Authentication
+
+* NextAuth.js v5
+* GitHub OAuth
+
+## Real-Time Communication
+
+* Socket.io / Pusher
+
+## Validation & Testing
+
+* Zod
+* Vitest
+
+## File Storage
+
+* Vercel Blob / Cloudinary
+
+---
+
+# Folder Structure
+
+```bash
+/app
+/components
+/lib
+/hooks
+/types
+/tests
+/prisma
+```
+
+---
+
+# Environment Variables
+
+Create a `.env` file in the root directory and add the following variables:
+
+```env
+DATABASE_URL=
+
+NEXTAUTH_SECRET=
+NEXTAUTH_URL=
+
+GITHUB_CLIENT_ID=
+GITHUB_CLIENT_SECRET=
+
+UPSTASH_REDIS_REST_URL=
+UPSTASH_REDIS_REST_TOKEN=
+
+BLOB_READ_WRITE_TOKEN=
+```
+
+---
+
+# Installation
+
+## Clone the Repository
+
+```bash
+git clone <your-repository-url>
+cd devpulse
+```
+
+## Install Dependencies
+
+```bash
+npm install
+```
+
+## Setup Database
+
+```bash
+npx prisma migrate deploy
+```
+
+## Generate Prisma Client
+
+```bash
+npx prisma generate
+```
+
+## Run Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Application will run at:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+# How to Try It
 
-To learn more about Next.js, take a look at the following resources:
+## 1. Register or Login
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+* Login using GitHub OAuth
+* Or create an account using credentials
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 2. Create a Submission
 
-## Deploy on Vercel
+* Navigate to the Submit page
+* Add title, description, code content, tags, and difficulty level
+* Publish the submission
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## 3. Review Other Submissions
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+* Open the review feed
+* Select a submission
+* Add detailed peer reviews and ratings
+
+## 4. Vote on Submissions
+
+* Upvote or downvote community submissions
+* Watch reputation update dynamically
+
+## 5. Experience Real-Time Updates
+
+* Open multiple browser tabs
+* Submit reviews from one account
+* Receive instant notifications and live updates
+
+## 6. Explore Leaderboard
+
+* Visit leaderboard page
+* Track top contributors and reputation rankings
+
+---
+
+# Running Tests
+
+Run all unit tests:
+
+```bash
+npx vitest run
+```
+
+---
+
+# Build for Production
+
+```bash
+npm run build
+```
+
+---
+
+# Core Highlights
+
+* Full App Router architecture
+* Advanced Server Components usage
+* Redis caching strategies
+* Real-time WebSocket integration
+* Optimistic UI updates
+* Server Actions implementation
+* Scalable API architecture
+* Production-ready folder structure
+
+---
